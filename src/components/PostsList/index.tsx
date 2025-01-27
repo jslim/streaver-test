@@ -4,6 +4,7 @@ import Card from '@/components/Card';
 import { memo, useCallback, useEffect, useState } from 'react';
 import Modal from '@/components/Modal';
 import Filter from '@/components/Filter';
+import axios, { AxiosResponse } from 'axios';
 
 interface PostsListProps {
   posts: Post[];
@@ -25,26 +26,26 @@ function PostsList({ posts }: PostsListProps) {
   }, []);
   
 
-  const retryFetch = useCallback(async (url: string, options: RequestInit, retries = 3): Promise<Response> => {
+  const retryFetch = useCallback(async (url: string, retries = 3): Promise<AxiosResponse> => {
     try {
-      const response = await fetch(url, options);
-      if (!response.ok) throw new Error('Request failed');
+      const response = await axios.delete(url);
       return response;
     } catch (error) {
       if (retries > 0) {
-        return retryFetch(url, options, retries - 1);
+        return retryFetch(url, retries - 1);
       } else {
         throw error;
       }
     }
-  },[]);
+  }, []);
+
 
   const handleDelete = useCallback(async () => {
     if (selectedPostId !== null) {
       setIsLoading(true);
       try {
-        const response = await retryFetch(`/api/posts/${selectedPostId}`, { method: 'DELETE' }, 3);
-        const { post } = await response.json();
+        const response = await retryFetch(`/api/posts/${selectedPostId}`, 3);
+        const { post } = response.data;
         setFilteredPosts((prev) => prev.filter((p) => p.id !== post.id));
         setSelectedPostId(null);
         setErrorMessage(null);

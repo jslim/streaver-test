@@ -5,8 +5,7 @@ import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 const prisma = new PrismaClient();
 
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
-  // Ensure that params are available in the async function context
-  const { id } = params;
+  const { id } = await params;
 
   try {
     const postId = parseInt(id, 10);
