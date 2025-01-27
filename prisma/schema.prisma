@@ -13,47 +13,47 @@ datasource db {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   name      String
-  username  String    @unique
-  email     String    @unique
+  username  String  @unique
+  email     String  @unique
   phone     String?
   website   String?
-  address   Address   @relation(fields: [addressId], references: [id])
+  address   Address @relation(fields: [addressId], references: [id])
   addressId Int
-  company   Company   @relation(fields: [companyId], references: [id])
+  company   Company @relation(fields: [companyId], references: [id])
   companyId Int
   posts     Post[]
 }
 
 model Post {
-  id      Int    @id @default(autoincrement())
-  userId  Int
-  title   String
-  body    String
-  user    User   @relation(fields: [userId], references: [id])
+  id     Int    @id @default(autoincrement())
+  userId Int
+  title  String
+  body   String
+  user   User   @relation(fields: [userId], references: [id])
 }
 
 model Address {
-  id      Int      @id @default(autoincrement())
+  id      Int    @id @default(autoincrement())
   street  String
   suite   String
   city    String
   zipcode String
-  geo     Geo      @relation(fields: [geoId], references: [id])
+  geo     Geo    @relation(fields: [geoId], references: [id])
   geoId   Int
   users   User[]
 }
 
 model Geo {
-  id      Int     @id @default(autoincrement())
+  id      Int       @id @default(autoincrement())
   lat     String
   lng     String
   address Address[]
 }
 
 model Company {
-  id          Int      @id @default(autoincrement())
+  id          Int    @id @default(autoincrement())
   name        String
   catchPhrase String
   bs          String

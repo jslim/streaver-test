@@ -42,11 +42,17 @@
   npx prisma migrate dev --name init  # Create initial migration
   npx prisma generate       # Generate Prisma Client
   ```
+- To seed the DB with data coming from an API, run:
+  ```bash
+  npx prisma format         # Format the schema
+  npx prisma migrate dev --name init  # Create initial migration
+  npx prisma generate       # Generate Prisma Client
+  ```
 
 ### Validation and Debugging
 - Use Prisma Studio to verify the database contents and relationships:
   ```bash
-  npx prisma studio
+  npx prisma db seed
   ```
 
 ## Dependencies
@@ -68,4 +74,3 @@
 ## General Notes
 - Always ensure migrations are properly formatted and applied before running queries.
 - Prisma uses the configuration in `schema.prisma` and `.env` to interact with the database.
-

@@ -5,7 +5,6 @@ const prisma = new PrismaClient();
 
 async function main() {
   try {
-    // Fetch users and posts from JSONPlaceholder
     const { data: users } = await axios.get('https://jsonplaceholder.typicode.com/users');
     const { data: posts } = await axios.get('https://jsonplaceholder.typicode.com/posts');
 
@@ -14,7 +13,6 @@ async function main() {
 
     // Seed Geo, Address, Company, and Users
     for (const user of users) {
-      // Create Geo
       const geo = await prisma.geo.create({
         data: {
           lat: user.address.geo.lat,
@@ -22,7 +20,6 @@ async function main() {
         },
       });
 
-      // Create Address
       const address = await prisma.address.create({
         data: {
           street: user.address.street,
@@ -33,7 +30,6 @@ async function main() {
         },
       });
 
-      // Create Company
       const company = await prisma.company.create({
         data: {
           name: user.company.name,
